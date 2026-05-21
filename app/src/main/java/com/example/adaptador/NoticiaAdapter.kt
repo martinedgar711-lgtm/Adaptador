@@ -2,11 +2,13 @@ package com.example.adaptador
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.adaptador.databinding.ItemListaBinding
 
-class NoticiaAdapter(val noticias: List<Noticia>) :
-        RecyclerView.Adapter<NoticiaHolder>() {
+class NoticiaAdapter(val noticias: List<Noticia>,
+                     val onNoticiaClicked: (Noticia) -> Unit) :
+    RecyclerView.Adapter<NoticiaHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -21,8 +23,9 @@ class NoticiaAdapter(val noticias: List<Noticia>) :
         position: Int
     ) {
         val noticia = noticias[position]
-        holder.binding.textView.text = noticias.size
+        holder.binding.textView.text = noticia.title
         holder.binding.textView2.text = noticia.description
+        holder.binding.root.setOnClickListener { onNoticiaClicked(noticia) }
     }
 
     override fun getItemCount() = noticias.size
